@@ -1,0 +1,46 @@
+{
+  "buildCommand": "bun run build",
+  "outputDirectory": ".next",
+  "installCommand": "bun install",
+  "framework": "nextjs",
+  "regions": ["sin1"],
+  "env": {
+    "NEXTAUTH_URL": "@nextauth_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "DATABASE_URL": "@database_url"
+  },
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=0, no-store"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin/page"
+    },
+    {
+      "source": "/admin/login",
+      "destination": "/admin/login/page"
+    },
+    {
+      "source": "/admin/dashboard",
+      "destination": "/admin/dashboard/page"
+    },
+    {
+      "source": "/admin/articles/new",
+      "destination": "/admin/articles/new/page"
+    }
+  ]
+}
